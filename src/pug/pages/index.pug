@@ -1,18 +1,17 @@
-extends ../pug/layouts/layout.pug
+extends ..//layouts/layout.pug
 block vars
 	- var title = 'Главная';
 block styles
-	include ../pug/includes/styles/styles.pug
+	include ..//includes/styles/styles.pug
 block header
-	include ../pug/includes/header/header.pug
+	include ..//includes/header/header.pug
 block content
 	main
-		//- include ../../pug/includes/blocks/home/first.pug
-		.block 111
+		.block Анатолий
 block footer
-	include ../pug/includes/footer/footer.pug
+	include ..//includes/footer/footer.pug
 block scripts
 	script(src="js/pages/swiper-bundle.js")
-	include ../pug/includes/scripts/scripts.pug
+	include ..//includes/scripts/scripts.pug
 	//- script(src="js/pages/home/m-com.js")
 	//- script(src="js/pages/home/m-reviews.js")
