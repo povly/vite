@@ -61,7 +61,7 @@ export default defineConfig({
   },
   plugins: [
     {
-      name: 'pug-hot-reload',
+      name: 'file-process',
       handleHotUpdate({ file, server }) {
         if (file.endsWith('.pug')) {
           try {
