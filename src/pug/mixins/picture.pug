@@ -1,0 +1,39 @@
+mixin picture(args = {})
+  -
+    const {
+      src,
+      lazy = false,
+      classes = '',
+      width,
+      height,
+      sizes = '',
+      formats = [],
+      srcset = '',
+      alt = '',
+    } = args;
+
+  picture
+    each format in formats
+      - const ext = format.type;
+      source(
+        type=`image/${ext}`
+        srcset=lazy ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiPjwvc3ZnPg==' : (format.srcset || format.src)
+        data-srcset=lazy ? (format.srcset || format.src) : null
+        sizes=lazy ? null : sizes
+        data-sizes=lazy ? sizes : null
+      )
+
+    //- Default image
+    img(
+      width=width
+      height=height
+      src=lazy ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiPjwvc3ZnPg==' : src
+      data-src=lazy ? src : null
+      srcset=lazy ? null : srcset
+      data-srcset=lazy ? srcset : null
+      sizes=lazy ? null : sizes
+      data-sizes=lazy ? sizes: null
+      alt=alt
+      loading=lazy ? 'lazy' : null
+      class=lazy ? ['lazy', classes] : classes
+    )&attributes(attributes)
