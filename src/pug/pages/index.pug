@@ -1,17 +1,16 @@
-extends ..//layouts/layout.pug
+extends ../layouts/layout.pug
+//- include ../mixins/picture
 block vars
 	- var title = 'Главная';
 block styles
-	include ..//includes/styles/styles.pug
+	include ../includes/styles/styles.pug
 block header
-	include ..//includes/header/header.pug
+	include ../includes/header/header.pug
 block content
 	main
-		.block Анатолий
+		.test(style="color:red;text-align:center;font-size:40px;") Тест шаблон
 block footer
-	include ..//includes/footer/footer.pug
+	include ../includes/footer/footer.pug
 block scripts
 	script(src="js/pages/swiper-bundle.js")
-	include ..//includes/scripts/scripts.pug
-	//- script(src="js/pages/home/m-com.js")
-	//- script(src="js/pages/home/m-reviews.js")
+	include ../includes/scripts/scripts.pug

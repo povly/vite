@@ -5,69 +5,85 @@ import { defineConfig } from "vite";
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import FullReload from 'vite-plugin-full-reload'; // Решил проблему перезагрузки файлов
-
+import FullReload from 'vite-plugin-full-reload';
 import pug from 'pug';
 
-// Получаем текущую директорию через import.meta.url
+// Constants
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PUG_DIR = path.join(__dirname, 'src/pug/pages');
+const HTML_DIR = path.join(__dirname, 'src/html');
 
-// Функция для рендеринга Pug в HTML
-function renderPugToHtml(pugPath) {
-  return pug.renderFile(pugPath, {
-    pretty: true,
-    basedir: path.join(__dirname, 'src/pug')
-  });
+// Utility functions
+function ensureDirectoryExistence(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
 }
 
-// Функция для генерации html
-function generateInitialHtml() {
-  const pagesDir = path.join(__dirname, 'src/pug/pages');
-  const outputDir = path.join(__dirname, 'src/html');
-
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+function renderPugToHtml(pugPath) {
+  try {
+    return pug.renderFile(pugPath, {
+      pretty: true,
+      basedir: path.join(__dirname, 'src/pug'),
+    });
+  } catch (error) {
+    console.error(`⚠️ PUG rendering error:`, error.message);
+    return null;
   }
+}
 
-  fs.readdirSync(pagesDir).forEach(file => {
+function generateInitialHtml() {
+  ensureDirectoryExistence(HTML_DIR);
+
+  fs.readdirSync(PUG_DIR).forEach(file => {
     if (file.endsWith('.pug')) {
       const name = file.replace('.pug', '');
-      const html = renderPugToHtml(path.join(pagesDir, file));
-      fs.writeFileSync(
-        path.join(outputDir, `${name}.html`),
-        html
-      );
+      const html = renderPugToHtml(path.join(PUG_DIR, file));
+
+      if (html) {
+        fs.writeFileSync(
+          path.join(HTML_DIR, `${name}.html`),
+          html
+        );
+      }
     }
   });
 }
-
-// Генерация html при запуске
+// Initial HTML generation
 generateInitialHtml();
 
+// Vite configuration
 export default defineConfig({
-  root: 'src/html', // Указываем корень как 'src/html'
+  root: 'src/html',
   base: './',
   server: {
     host: true,
-    cors: true,
-    strictPort: true,
-    port: Number(process.env.PORT) || 5000,
-    hmr: {
-      host: "localhost",
-    },
-    watch: {
-      include: path.join(__dirname, 'src/pug/**/*.pug'),
-    },
   },
   plugins: [
     {
       name: 'pug-hot-reload',
-      handleHotUpdate() {
-        generateInitialHtml();
+      handleHotUpdate({ file, server }) {
+        if (file.endsWith('.pug')) {
+          try {
+            const relativePath = path.relative(PUG_DIR, file);
+            const outputName = relativePath.replace('.pug', '.html');
+            const html = renderPugToHtml(file);
+            if (html) {
+              fs.writeFileSync(
+                path.join(HTML_DIR, outputName),
+                html
+              );
+              console.log(`♻️ Updated: ${outputName}`);
+            }
+            server.ws.send({ type: "full-reload" });
+          } catch (error) {
+            console.error('⚠️ Hot reload error:', error.message);
+          }
+        }
         return [];
       }
     },
-    FullReload(['src/pug/**/*.pug'])
+    FullReload(['src/pug/**/*.pug'], { delay: 200 })
   ],
   resolve: {
     alias: {
