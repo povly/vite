@@ -1,12 +1,14 @@
 import path from 'path';
 import { normalizePath } from 'vite';
 
-const NODE_ENV = process.env.NODE_ENV;
 
 const config = {
   rootDir: normalizePath(path.join(__dirname)),
-  pugDir: normalizePath(path.join(__dirname, 'src/pug')),
-  pugDirPages: normalizePath(path.join(__dirname, 'src/pug/pages')),
-  htmlDir: NODE_ENV !== 'dev' ? normalizePath(path.join(__dirname, 'src/html')) : normalizePath(path.join(__dirname, '../dist')),
+  pugDir: normalizePath(path.join(__dirname, 'src', 'pug')),
+  pugDirPages: normalizePath(path.join(__dirname, 'src', 'pug', 'pages')),
+  htmlDir: normalizePath(path.join(__dirname, 'dist')),
+  sassDir: normalizePath(path.join(__dirname, 'src', 'sass')),
+  sassDirPages: normalizePath(path.join(__dirname, 'src', 'sass', 'pages')),
+  cssDir: normalizePath(path.join(__dirname, 'dist', 'css')),
 }
 export default config;

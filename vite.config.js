@@ -3,14 +3,14 @@ dotenv.config();
 
 import { defineConfig } from "vite";
 import PugConverter from './plugins/PugConverter';
-
-const NODE_ENV = process.env.NODE_ENV;
+import SassConverter from './plugins/SassConverter';
 
 export default defineConfig(() => ({
-  root: NODE_ENV !== 'dev' ? 'src/html' : 'dist',
+  root: 'dist',
   base: './',
   server: { host: true },
   plugins: [
-    PugConverter()
+    PugConverter(),
+    SassConverter(),
   ],
 }));

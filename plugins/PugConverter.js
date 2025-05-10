@@ -1,15 +1,10 @@
 import fs from 'fs';
-import path from 'path';
-import { normalizePath } from 'vite';
+import path, { normalize } from 'path';
 import pug from 'pug';
 import config from '../config.js';
+import ensureDirectoryExists from '../inc/functions/ensureDirectoryExists.js';
 
 export default function PugConverter() {
-  function ensureDirectoryExists(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-  }
   function renderPugToHtml(pugPath) {
     try {
       return pug.renderFile(pugPath, {
@@ -29,7 +24,7 @@ export default function PugConverter() {
       // Check if pug at dir src/pug/pages
       if (_path.includes(config.pugDirPages) && _name.endsWith('.pug')){
         const name = _name.replace('.pug', '.html');
-        const html = renderPugToHtml(normalizePath(path.join(_path, _name)));
+        const html = renderPugToHtml(normalize(path.join(_path, _name)));
         if (html){
           fs.writeFileSync(
             path.join(config.htmlDir, name),
