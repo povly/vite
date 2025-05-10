@@ -7,6 +7,7 @@ import SassConverter from './plugins/SassConverter';
 import pathConfig from './pathConfig';
 import FontsConverter from './plugins/FontsConverter';
 import ImageOptimizer from './plugins/ImageOptimizer';
+import JsCompiler from './plugins/JSCompiler';
 
 export default defineConfig(() => ({
   root: pathConfig.dist.html,
@@ -17,6 +18,7 @@ export default defineConfig(() => ({
     SassConverter(),
     FontsConverter(),
     ImageOptimizer(),
+    JsCompiler(),
   ],
   build: {
     write: false

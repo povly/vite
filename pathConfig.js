@@ -7,13 +7,19 @@ const pathConfig = {
   rootSrc: createPath(),
   pug: {
     src: createPath('src', 'pug'),
-    pages: createPath('src', 'pug', 'pages')
+    pages: createPath('src', 'pug', 'pages'),
+  },
+  js: {
+    src: createPath('src', 'js'),
+    pages: createPath('src', 'js', 'pages'),
+    blocks: createPath('src', 'js', 'blocks'),
   },
   dist: {
     html: createPath('dist'),
     css: createPath('dist', 'css'),
     fonts: createPath('dist', 'fonts'),
-    img: createPath('dist', 'images')
+    img: createPath('dist', 'images'),
+    js: createPath('dist', 'js'),
   },
   styles: {
     src: createPath('src', 'sass'),

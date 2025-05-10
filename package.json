@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
     "autoprefixer": "^10.4.21",
     "dotenv": "^16.5.0",
     "glob": "^11.0.2",
@@ -14,6 +16,7 @@
     "svgo": "^3.3.2",
     "ttf2woff": "^3.0.0",
     "ttf2woff2": "^6.0.1",
+    "uglify-js": "^3.19.3",
     "vite": "^6.3.5"
   },
   "scripts": {
