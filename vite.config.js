@@ -6,6 +6,7 @@ import PugConverter from './plugins/PugConverter';
 import SassConverter from './plugins/SassConverter';
 import pathConfig from './pathConfig';
 import FontsConverter from './plugins/FontsConverter';
+import ImageOptimizer from './plugins/ImageOptimizer';
 
 export default defineConfig(() => ({
   root: pathConfig.dist.html,
@@ -14,6 +15,7 @@ export default defineConfig(() => ({
   plugins: [
     PugConverter(),
     SassConverter(),
-    FontsConverter(),
+    FontsConverter(), 
+    ImageOptimizer(),
   ],
 }));

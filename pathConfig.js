@@ -12,14 +12,16 @@ const pathConfig = {
   dist: {
     html: createPath('dist'),
     css: createPath('dist', 'css'),
-    fonts: createPath('dist', 'fonts')
+    fonts: createPath('dist', 'fonts'),
+    img: createPath('dist', 'images')
   },
   styles: {
     src: createPath('src', 'sass'),
     pages: createPath('src', 'sass', 'pages')
   },
   assets: {
-    fontsSrc: createPath('src', 'fonts')
+    fontsSrc: createPath('src', 'fonts'),
+    imagesSrc: createPath('src', 'images'),
   }
 };
 
