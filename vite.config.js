@@ -3,7 +3,7 @@ dotenv.config();
 
 import path from 'path';
 import { defineConfig } from "vite";
-import PugConverter from './plugins/pug-converter';
+import PugConverter from './plugins/PugConverter';
 
 // Constants
 const NODE_ENV = process.env.NODE_ENV; // .env arguments
@@ -23,4 +23,3 @@ export default defineConfig({
     },
   },
 });
- 
