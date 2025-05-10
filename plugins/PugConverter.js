@@ -44,7 +44,7 @@ export default function PugConverter() {
     });
   }
   return {
-    name: 'pug-converter',
+    name: 'vite-povly-pug-converter',
     configureServer(server) {
       generateInitialHtml();
       const watcher = fs.watch(
