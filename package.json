@@ -6,9 +6,12 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "dotenv": "^16.5.0",
+    "glob": "^11.0.2",
     "postcss": "^8.5.3",
     "pug": "^3.0.3",
     "sass-embedded": "^1.87.0",
+    "ttf2woff": "^3.0.0",
+    "ttf2woff2": "^6.0.1",
     "vite": "^6.3.5"
   },
   "scripts": {

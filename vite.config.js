@@ -5,6 +5,7 @@ import { defineConfig } from "vite";
 import PugConverter from './plugins/PugConverter';
 import SassConverter from './plugins/SassConverter';
 import pathConfig from './pathConfig';
+import FontsConverter from './plugins/FontsConverter';
 
 export default defineConfig(() => ({
   root: pathConfig.dist.html,
@@ -13,5 +14,6 @@ export default defineConfig(() => ({
   plugins: [
     PugConverter(),
     SassConverter(),
+    FontsConverter(),
   ],
 }));
