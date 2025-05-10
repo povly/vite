@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { normalizePath } from 'vite';
-import config from '../config.js';
+import pathConfig from '../pathConfig.js';
 import * as sass from 'sass-embedded';
 import ensureDirectoryExists from '../inc/functions/ensureDirectoryExists.js';
 import postcss from 'postcss';
@@ -17,12 +17,12 @@ export default function SassConverter() {
     }
   }
   function generateCSS(){
-    ensureDirectoryExists(config.cssDir);
-    fs.readdirSync(config.sassDirPages, {withFileTypes: true}).forEach((file)=>{
+    ensureDirectoryExists(pathConfig.dist.css);
+    fs.readdirSync(pathConfig.styles.pages, {withFileTypes: true}).forEach((file)=>{
       const _path = file.parentPath;
       const _name = file.name;
 
-      if (_path.includes(config.sassDirPages) && _name.endsWith('.scss')){
+      if (_path.includes(pathConfig.styles.pages) && _name.endsWith('.scss')){
         const name = _name.replace('.scss', '.css');
         const resultCSS = renderSassToCss(normalizePath(path.join(_path, _name)));
         if (resultCSS){
@@ -31,7 +31,7 @@ export default function SassConverter() {
               console.warn(warn.toString())
             })
             fs.writeFileSync(
-              normalizePath(path.join(config.cssDir, name)),
+              normalizePath(path.join(pathConfig.dist.css, name)),
               result.css
             )
           })
@@ -44,7 +44,7 @@ export default function SassConverter() {
     configureServer(server) {
       generateCSS();
       const watcher = fs.watch(
-        config.sassDir,
+        pathConfig.styles.src,
         { recursive: true },
         (eventType, filename) => {
           if (filename && filename.endsWith('.scss')) {

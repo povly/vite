@@ -1,7 +1,8 @@
 import fs from 'fs';
-import path, { normalize } from 'path';
+import path from 'path';
 import pug from 'pug';
-import config from '../config.js';
+import { normalizePath } from 'vite';
+import pathConfig from '../pathConfig.js';
 import ensureDirectoryExists from '../inc/functions/ensureDirectoryExists.js';
 
 export default function PugConverter() {
@@ -9,7 +10,7 @@ export default function PugConverter() {
     try {
       return pug.renderFile(pugPath, {
         pretty: true,
-        basedir: config.pugDir,
+        basedir: pathConfig.pug.src,
       });
     } catch (error) {
       console.error(`⚠️ PUG rendering error:`, error.message);
@@ -17,17 +18,17 @@ export default function PugConverter() {
     }
   }
   function generateInitialHtml() {
-    ensureDirectoryExists(config.htmlDir);
-    fs.readdirSync(config.pugDirPages, {withFileTypes: true}).forEach(file => {
+    ensureDirectoryExists(pathConfig.dist.html);
+    fs.readdirSync(pathConfig.pug.pages, {withFileTypes: true}).forEach(file => {
       const _path = file.parentPath; // path file
       const _name = file.name; // name file
       // Check if pug at dir src/pug/pages
-      if (_path.includes(config.pugDirPages) && _name.endsWith('.pug')){
+      if (_path.includes(pathConfig.pug.pages) && _name.endsWith('.pug')){
         const name = _name.replace('.pug', '.html');
-        const html = renderPugToHtml(normalize(path.join(_path, _name)));
+        const html = renderPugToHtml(normalizePath(path.join(_path, _name)));
         if (html){
           fs.writeFileSync(
-            path.join(config.htmlDir, name),
+            path.join(pathConfig.dist.html, name),
             html
           )
         }
@@ -39,7 +40,7 @@ export default function PugConverter() {
     configureServer(server) {
       generateInitialHtml();
       const watcher = fs.watch(
-        config.pugDir,
+        pathConfig.pug.src,
         { recursive: true },
         (eventType, filename) => {
           if (filename && filename.endsWith('.pug')) {
