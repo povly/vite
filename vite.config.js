@@ -1,25 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import path from 'path';
 import { defineConfig } from "vite";
 import PugConverter from './plugins/PugConverter';
 
-// Constants
-const NODE_ENV = process.env.NODE_ENV; // .env arguments
+const NODE_ENV = process.env.NODE_ENV;
 
-export default defineConfig({
+export default defineConfig(({mode}) => ({
   root: NODE_ENV !== 'dev' ? 'src/html' : 'dist',
   base: './',
-  server: {
-    host: true,
-  },
+  server: { host: true },
   plugins: [
-    PugConverter(),
+    PugConverter()
   ],
-  resolve: {
-    alias: {
-      '@src': path.join(__dirname, 'src'),
-    },
-  },
-});
+}));
