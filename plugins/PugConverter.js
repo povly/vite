@@ -49,6 +49,9 @@ export default function PugConverter() {
         }
       )
       server.httpServer?.once('close', () => watcher.close()); // Сервер закрывается, отключаем наблюдатель
+    },
+    buildStart() {
+      generateInitialHtml();
     }
   }
 }

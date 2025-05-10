@@ -15,7 +15,10 @@ export default defineConfig(() => ({
   plugins: [
     PugConverter(),
     SassConverter(),
-    FontsConverter(), 
+    FontsConverter(),
     ImageOptimizer(),
   ],
+  build: {
+    write: false
+  }
 }));

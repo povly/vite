@@ -53,6 +53,9 @@ export default function SassConverter() {
         }
       )
       server.httpServer?.once('close', () => watcher.close()); // Сервер закрывается, отключаем наблюдатель
+    },
+    buildStart() {
+      generateCSS();
     }
   }
 }

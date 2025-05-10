@@ -92,6 +92,9 @@ export default function FontsConverter() {
       );
 
       server.httpServer?.once('close', () => watcher.close());
+    },
+    buildStart() {
+      proccessAllFonts();
     }
   }
 }
