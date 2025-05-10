@@ -4,6 +4,8 @@ import { normalizePath } from 'vite';
 import config from '../config.js';
 import * as sass from 'sass-embedded';
 import ensureDirectoryExists from '../inc/functions/ensureDirectoryExists.js';
+import postcss from 'postcss';
+import autoprefixer from 'autoprefixer';
 
 export default function SassConverter() {
   function renderSassToCss(path){
@@ -24,10 +26,15 @@ export default function SassConverter() {
         const name = _name.replace('.scss', '.css');
         const resultCSS = renderSassToCss(normalizePath(path.join(_path, _name)));
         if (resultCSS){
-          fs.writeFileSync(
-            normalizePath(path.join(config.cssDir, name)),
-            resultCSS.css
-          )
+          postcss([autoprefixer]).process(resultCSS.css, { from: undefined }).then(result => {
+            result.warnings().forEach(warn => {
+              console.warn(warn.toString())
+            })
+            fs.writeFileSync(
+              normalizePath(path.join(config.cssDir, name)),
+              result.css
+            )
+          })
         }
       }
     })
