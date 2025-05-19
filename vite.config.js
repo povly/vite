@@ -2,12 +2,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { defineConfig } from "vite";
-import PugConverter from './plugins/PugConverter';
 import SassConverter from './plugins/SassConverter';
 import pathConfig from './pathConfig';
 import FontsConverter from './plugins/FontsConverter';
 import ImageOptimizer from './plugins/ImageOptimizer';
 import JsCompiler from './plugins/JSCompiler';
+import PugConverter from "@povly/vite-plugin-pug"
 
 export default defineConfig(() => ({
   root: pathConfig.dist.html,

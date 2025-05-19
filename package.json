@@ -10,7 +10,6 @@
     "dotenv": "^16.5.0",
     "glob": "^11.0.2",
     "postcss": "^8.5.3",
-    "pug": "^3.0.3",
     "sass-embedded": "^1.87.0",
     "sharp": "^0.34.1",
     "svgo": "^3.3.2",
@@ -27,5 +26,8 @@
     "last 3 versions",
     "not ie <= 9",
     "Firefox ESR"
-  ]
+  ],
+  "dependencies": {
+    "@povly/vite-plugin-pug": "^1.0.2"
+  }
 }
